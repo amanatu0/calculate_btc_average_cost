@@ -1,1 +1,2 @@
 # calculate_btc_average_cost
+BitFlyerの取引レポートからBTCの平均取得金額を計算するpythonコード
