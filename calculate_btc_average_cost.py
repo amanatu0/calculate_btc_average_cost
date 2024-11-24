@@ -34,19 +34,19 @@ def calculate_btc_average_cost():
             # 売却の場合
             remaining_sell = amount
             
-            while remaining_sell > 0 and buy_queue:
+            while remaining_sell < 0 and buy_queue:
                 oldest_buy = buy_queue[0]
                 if oldest_buy['amount'] <= remaining_sell:
                     # 購入ロットを全て売却
-                    remaining_sell -= oldest_buy['amount']
-                    total_cost -= oldest_buy['amount'] * oldest_buy['price']
-                    current_position -= oldest_buy['amount']
+                    remaining_sell += oldest_buy['amount']
+                    total_cost += oldest_buy['amount'] * oldest_buy['price']
+                    current_position += oldest_buy['amount']
                     buy_queue.popleft()
                 else:
                     # 購入ロットの一部を売却
-                    oldest_buy['amount'] -= remaining_sell
-                    total_cost -= remaining_sell * oldest_buy['price']
-                    current_position -= remaining_sell
+                    oldest_buy['amount'] += remaining_sell
+                    total_cost += remaining_sell * oldest_buy['price']
+                    current_position += remaining_sell
                     remaining_sell = 0
     
     # 平均取得価格を計算
